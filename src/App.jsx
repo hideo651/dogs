@@ -5,18 +5,21 @@ import Home from "./components/Home";
 
 import NotFound from "./components/NotFound";
 import Login from "./components/Login/Login";
+import { UserStorage } from "./UserContext";
 
 const App = () => {
   return (
     <div>
       <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login/*" element={<Login />} />
-          <Route path="*" element={<NotFound />}></Route>
-        </Routes>
-        <Footer />
+        <UserStorage>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login/*" element={<Login />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <Footer />
+        </UserStorage>
       </BrowserRouter>
     </div>
   );
