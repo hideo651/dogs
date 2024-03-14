@@ -3,6 +3,7 @@
 import React from "react";
 import { api } from "./Service/service";
 import { useNavigate } from "react-router-dom";
+import { func } from "prop-types";
 
 export const UserContext = React.createContext();
 
@@ -14,13 +15,14 @@ export const UserStorage = ({ children }) => {
   const navigate = useNavigate();
 
   const userLogout = React.useCallback(
-    async function () {
+    function () {
       setData(null);
       setError(null);
       setLoading(false);
       setLogin(false);
+
       localStorage.removeItem("token");
-      navigate("/login");
+      navigate("/");
     },
     [navigate]
   );
@@ -46,10 +48,26 @@ export const UserStorage = ({ children }) => {
 
       await getUser(token);
       navigate("/conta");
-    } catch (error) {
+    } catch (err) {
       setError("Usuário inválido");
       setLoading(false);
-      console.log(error.message);
+      console.log(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function userCreate(data) {
+    try {
+      setLoading(true);
+      setLoading(true);
+      const response = await api.post(`/api/user`, data);
+
+      userLogin({ username: data.username, password: data.password });
+    } catch (err) {
+      setError(err.response.data.message);
+      setLoading(false);
+      console.log(err.response.data.message);
     } finally {
       setLoading(false);
     }
@@ -71,6 +89,8 @@ export const UserStorage = ({ children }) => {
         } finally {
           setLoading(false);
         }
+      } else {
+        setLogin(false);
       }
     }
     autoLogin();
@@ -78,7 +98,16 @@ export const UserStorage = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ userLogin, getUser, data, userLogout, error, loading, login }}
+      value={{
+        userLogin,
+        getUser,
+        data,
+        userLogout,
+        error,
+        loading,
+        login,
+        userCreate,
+      }}
     >
       {children}
     </UserContext.Provider>
