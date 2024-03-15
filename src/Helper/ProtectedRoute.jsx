@@ -12,7 +12,7 @@ const ProtectedRoute = ({ children }) => {
     return <Navigate to="/login" />;
   } else {
     return (
-      <section>
+      <section className="container">
         <h1>Carregando...</h1>
       </section>
     );

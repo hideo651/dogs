@@ -6,14 +6,7 @@ import React from "react";
 import { UserContext } from "../UserContext";
 
 const Header = () => {
-  const { data, userLogout } = React.useContext(UserContext);
-
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate(`/`);
-    userLogout();
-  };
+  const { data } = React.useContext(UserContext);
 
   return (
     <header className={style.header}>
@@ -28,7 +21,6 @@ const Header = () => {
               <Link className={style.login} to="/conta">
                 {data.nome}
               </Link>
-              <button onClick={handleClick}>Sair</button>
             </div>
           </>
         ) : (
