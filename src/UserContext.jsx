@@ -40,10 +40,12 @@ export const UserStorage = ({ children }) => {
       setLoading(true);
       const response = await api.post(`/jwt-auth/v1/token`, data);
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("username", response.data.user_nicename);
+      console.log(response.data.user_nicename);
       const token = response.data.token;
 
       await getUser(token);
-      navigate("/conta");
+      // navigate("/conta");
     } catch (err) {
       setError("Usuário inválido");
       setLoading(false);
@@ -55,11 +57,27 @@ export const UserStorage = ({ children }) => {
 
   async function userCreate(data) {
     try {
-      setLoading(true);
+      // setLoading(true);
       setLoading(true);
       const response = await api.post(`/api/user`, data);
 
       userLogin({ username: data.username, password: data.password });
+    } catch (err) {
+      setError(err.response.data.message);
+      setLoading(false);
+      console.log(err.response.data.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function postPhoto(data) {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("token");
+      api.defaults.headers.authorization = `Bearer ${token}`;
+      const response = await api.post(`/api/photo`, data);
+      navigate("/conta");
     } catch (err) {
       setError(err.response.data.message);
       setLoading(false);
@@ -103,6 +121,7 @@ export const UserStorage = ({ children }) => {
         loading,
         login,
         userCreate,
+        postPhoto,
       }}
     >
       {children}
