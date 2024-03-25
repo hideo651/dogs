@@ -1,9 +1,13 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
+
 import style from "./FeedPhotosItem.module.css";
-const FeedPhotosItem = ({ photo }) => {
+const FeedPhotosItem = ({ photo, setModalPhoto }) => {
+  function handleClick() {
+    setModalPhoto(photo);
+  }
   return (
-    <li className={style.photo}>
+    <li className={style.photo} onClick={handleClick}>
       <img src={photo.src} alt={photo.title} />
       <span className={style.visualizacao}>{photo.acessos}</span>
     </li>

@@ -3,7 +3,6 @@
 import React from "react";
 import { api } from "./Service/service";
 import { useNavigate } from "react-router-dom";
-import { func } from "prop-types";
 
 export const UserContext = React.createContext();
 
@@ -13,6 +12,8 @@ export const UserStorage = ({ children }) => {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
   const [photos, setPhotos] = React.useState(null);
+  const [photoData, setPhotoData] = React.useState(null);
+  const [loadingModal, setLoadingModal] = React.useState(null);
   const navigate = useNavigate();
 
   const userLogout = React.useCallback(function () {
@@ -95,13 +96,26 @@ export const UserStorage = ({ children }) => {
         `/api/photo/?_page=${page}&_total=${total}&_user=${user}`
       );
       setPhotos(response.data);
-      console.log(response);
     } catch (err) {
       setError(err.response.data.message);
       setLoading(false);
       console.log(err.response.data.message);
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function photoGet(id) {
+    try {
+      setLoadingModal(true);
+      const response = await api.get(`/api/photo/${id}`);
+      setPhotoData(response.data);
+    } catch (err) {
+      setError(err.response.data.message);
+      setLoadingModal(false);
+      console.log(err.response.data.message);
+    } finally {
+      setLoadingModal(false);
     }
   }
 
@@ -142,6 +156,10 @@ export const UserStorage = ({ children }) => {
         postPhoto,
         getPhotos,
         photos,
+        photoGet,
+        photoData,
+        setPhotoData,
+        loadingModal,
       }}
     >
       {children}

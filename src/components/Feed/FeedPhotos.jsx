@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
@@ -7,10 +8,9 @@ import Error from "../../Helper/Error";
 import Loading from "../../Helper/Loading";
 import style from "./FeedPhotos.module.css";
 
-const FeedPhotos = () => {
+const FeedPhotos = ({ setModalPhoto }) => {
   const { getPhotos, error, loading, photos } = React.useContext(UserContext);
 
-  console.log(photos);
   React.useEffect(() => {
     getPhotos(1, 6, 0);
   }, []);
@@ -21,7 +21,11 @@ const FeedPhotos = () => {
     return (
       <ul className={`${style.feed} animeLeft`}>
         {photos.map((photo) => (
-          <FeedPhotosItem key={photo.id} photo={photo} />
+          <FeedPhotosItem
+            key={photo.id}
+            photo={photo}
+            setModalPhoto={setModalPhoto}
+          />
         ))}
       </ul>
     );
