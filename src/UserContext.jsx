@@ -79,6 +79,7 @@ export const UserStorage = ({ children }) => {
       const token = localStorage.getItem("token");
       api.defaults.headers.authorization = `Bearer ${token}`;
       const response = await api.post(`/api/photo`, data);
+      console.log(response);
       navigate("/conta");
     } catch (err) {
       setError(err.response.data.message);
@@ -92,6 +93,9 @@ export const UserStorage = ({ children }) => {
   async function getPhotos(page, total, user) {
     try {
       setLoading(true);
+      api.defaults.headers = {
+        "Cache-Control": "no-cache",
+      };
       const response = await api.get(
         `/api/photo/?_page=${page}&_total=${total}&_user=${user}`
       );
