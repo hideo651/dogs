@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import style from "./Button.module.css";
+import React from "react";
+import styles from "./Button.module.css";
 
 const Button = ({ children, ...props }) => {
   return (
-    <button {...props} className={style.button}>
+    <button {...props} className={styles.button}>
       {children}
     </button>
   );

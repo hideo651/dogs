@@ -1,35 +1,29 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React from "react";
-import style from "./FeedModal.module.css";
-import { UserContext } from "../../UserContext";
-import Error from "../../Helper/Error";
-import Loading from "../../Helper/Loading";
+import styles from "./FeedModal.module.css";
+import useFetch from "../../Hooks/useFetch";
+import Error from "../Helper/Error";
+import Loading from "../Helper/Loading";
+import { PHOTO_GET } from "../../Api";
 import PhotoContent from "../Photo/PhotoContent";
 
 const FeedModal = ({ photo, setModalPhoto }) => {
-  const { photoData, setPhotoData, error, loadingModal, photoGet } =
-    React.useContext(UserContext);
-
-  console.log(loadingModal);
+  const { data, error, loading, request } = useFetch();
 
   React.useEffect(() => {
-    photoGet(photo.id);
-  }, [photo]);
+    const { url, options } = PHOTO_GET(photo.id);
+    request(url, options);
+  }, [photo, request]);
 
-  function handleClick(event) {
-    if (event.target === event.currentTarget) {
-      setModalPhoto(false);
-      setPhotoData(null);
-    }
+  function handleOutsideClick(event) {
+    if (event.target === event.currentTarget) setModalPhoto(null);
   }
 
   return (
-    <div className={style.modal} onClick={handleClick}>
+    <div className={styles.modal} onClick={handleOutsideClick}>
       {error && <Error error={error} />}
-      {loadingModal && <Loading />}
-      {photoData && <PhotoContent data={photoData} />}
+      {loading && <Loading />}
+      {data && <PhotoContent data={data} />}
     </div>
   );
 };

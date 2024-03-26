@@ -14,6 +14,7 @@ const useMedia = (media) => {
       window.removeEventListener("resize", changeMatch);
     };
   }, [media]);
+
   return match;
 };
 

@@ -1,24 +1,24 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-
-import style from "./Input.module.css";
+import React from "react";
+import styles from "./Input.module.css";
 
 const Input = ({ label, type, name, value, onChange, error, onBlur }) => {
   return (
-    <div className={style.wrapper}>
-      <label className={style.label} htmlFor={name}>
+    <div className={styles.wrapper}>
+      <label htmlFor={name} className={styles.label}>
         {label}
       </label>
       <input
-        className={style.input}
-        type={type}
         id={name}
         name={name}
-        onChange={onChange}
+        className={styles.input}
+        type={type}
         value={value}
+        onChange={onChange}
         onBlur={onBlur}
       />
-      {error && <p className={style.error}>{error}</p>}
+      {error && <p className={styles.error}>{error}</p>}
     </div>
   );
 };

@@ -4,7 +4,7 @@
   width: 100%;
   z-index: 100;
   background: white;
-  top: 0;
+  top: 0px;
 }
 
 .nav {
@@ -14,6 +14,10 @@
   height: 4rem;
 }
 
+.logo {
+  padding: 0.5rem 0;
+}
+
 .login {
   color: #333;
   display: flex;
@@ -21,12 +25,12 @@
 }
 
 .login::after {
-  content: "";
+  content: '';
   display: inline-block;
   width: 14px;
   height: 17px;
-  background: url("../Assets/usuario.svg") no-repeat center center;
+  background: url('../Assets/usuario.svg') no-repeat center center;
   margin-left: 0.5rem;
   position: relative;
-  top: 1px;
+  top: -1px;
 }

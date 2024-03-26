@@ -1,7 +1,5 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
-const PhotoComments = ({ id, comments }) => {
-  return <div>Photo Comments</div>;
+const PhotoComments = () => {
+  return <div></div>;
 };
 
 export default PhotoComments;

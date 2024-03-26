@@ -1,30 +1,24 @@
-/* eslint-disable no-unused-vars */
-import { Link, useNavigate } from "react-router-dom";
-import style from "./Header.module.css";
-import Dog from "../Assets/dogs.svg?react";
-import React from "react";
-import { UserContext } from "../UserContext";
+import React from 'react';
+import styles from './Header.module.css';
+import { Link } from 'react-router-dom';
+import Dogs from '../Assets/dogs.svg?react';
+import { UserContext } from '../UserContext';
 
 const Header = () => {
   const { data } = React.useContext(UserContext);
 
   return (
-    <header className={style.header}>
-      <nav className={`${style.nav} container`}>
-        <Link className={style.logo} to="/" aria-label="Dogs - Home">
-          <Dog />
+    <header className={styles.header}>
+      <nav className={`${styles.nav} container`}>
+        <Link className={styles.logo} to="/" aria-label="Dogs - Home">
+          <Dogs />
         </Link>
         {data ? (
-          <>
-            {" "}
-            <div>
-              <Link className={style.login} to="/conta">
-                {data.nome}
-              </Link>
-            </div>
-          </>
+          <Link className={styles.login} to="/conta">
+            {data.nome}
+          </Link>
         ) : (
-          <Link className={style.login} to="/login">
+          <Link className={styles.login} to="/login">
             Login / Criar
           </Link>
         )}
