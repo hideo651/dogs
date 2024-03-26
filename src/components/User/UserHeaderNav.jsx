@@ -1,28 +1,24 @@
-/* eslint-disable no-unused-vars */
-import React from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { UserContext } from "../../UserContext";
-import Feed from "../../Assets/feed.svg?react";
-import Estatistica from "../../Assets/estatisticas.svg?react";
-import AdicionarFoto from "../../Assets/adicionar.svg?react";
-import Sair from "../../Assets/sair.svg?react";
-import style from "./UserHeaderNav.module.css";
-import useMedia from "../../Hooks/useMedia";
+import React from 'react';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { UserContext } from '../../UserContext';
+import MinhasFotos from '../../Assets/feed.svg?react';
+import Estatisticas from '../../Assets/estatisticas.svg?react';
+import AdicionarFoto from '../../Assets/adicionar.svg?react';
+import Sair from '../../Assets/sair.svg?react';
+import styles from './UserHeaderNav.module.css';
+import useMedia from '../../Hooks/useMedia';
 
 const UserHeaderNav = () => {
   const { userLogout } = React.useContext(UserContext);
-  const mobile = useMedia("(max-width: 40rem)");
-  const [mobileMenu, setMobileMenu] = React.useState(false);
-
   const navigate = useNavigate();
-
   function handleLogout() {
     userLogout();
-    navigate("/login");
+    navigate('/login');
   }
+  const mobile = useMedia('(max-width: 40rem)');
+  const [mobileMenu, setMobileMenu] = React.useState(false);
 
   const { pathname } = useLocation();
-
   React.useEffect(() => {
     setMobileMenu(false);
   }, [pathname]);
@@ -31,30 +27,34 @@ const UserHeaderNav = () => {
     <>
       {mobile && (
         <button
-          className={`${style.mobileButton} ${
-            mobileMenu && style.mobileButtonActive
-          }`}
           aria-label="Menu"
+          className={`${styles.mobileButton} ${
+            mobileMenu && styles.mobileButtonActive
+          }`}
           onClick={() => setMobileMenu(!mobileMenu)}
         ></button>
       )}
 
       <nav
-        className={`${mobile ? style.navMobile : style.nav} ${
-          mobileMenu && style.navMobileActive
+        className={`${mobile ? styles.navMobile : styles.nav} ${
+          mobileMenu && styles.navMobileActive
         }`}
       >
         <NavLink to="/conta" end>
-          <Feed /> {mobile && "Minhas Fotos"}
+          <MinhasFotos />
+          {mobile && 'Minhas Fotos'}
         </NavLink>
-        <NavLink to="/conta/estatistica">
-          <Estatistica /> {mobile && "Estatisticas"}
+        <NavLink to="/conta/estatisticas">
+          <Estatisticas />
+          {mobile && 'Estatísticas'}
         </NavLink>
         <NavLink to="/conta/postar">
-          <AdicionarFoto /> {mobile && "Adicionar fotos"}
+          <AdicionarFoto />
+          {mobile && 'Adicionar Foto'}
         </NavLink>
         <button onClick={handleLogout}>
-          <Sair /> {mobile && "Sair"}
+          <Sair />
+          {mobile && 'Sair'}
         </button>
       </nav>
     </>

@@ -1,30 +1,31 @@
-import React from "react";
-import useForm from "../../Hooks/useForm";
-import Button from "../Forms/Button";
-import Input from "../Forms/Input";
-import { UserContext } from "../../UserContext";
-import Error from "../../Helper/Error";
+import React from 'react';
+import Input from '../Forms/Input';
+import Button from '../Forms/Button';
+import Error from '../Helper/Error';
+import useForm from '../../Hooks/useForm';
+import { USER_POST } from '../../Api';
+import { UserContext } from '../../UserContext';
+import useFetch from '../../Hooks/useFetch';
 
 const LoginCreate = () => {
   const username = useForm();
+  const email = useForm('email');
   const password = useForm();
-  const email = useForm("email");
 
-  const { userCreate, loading, error } = React.useContext(UserContext);
+  const { userLogin } = React.useContext(UserContext);
+  const { loading, error, request } = useFetch();
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-
-    const data = {
+    const { url, options } = USER_POST({
       username: username.value,
       email: email.value,
       password: password.value,
-    };
-
-    if (username.validate() && password.validate() && email.validate()) {
-      userCreate(data);
-    }
+    });
+    const { response } = await request(url, options);
+    if (response.ok) userLogin(username.value, password.value);
   }
+
   return (
     <section className="animeLeft">
       <h1 className="title">Cadastre-se</h1>

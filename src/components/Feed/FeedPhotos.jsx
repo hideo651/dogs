@@ -1,26 +1,30 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import FeedPhotosItem from "./FeedPhotosItem";
-import { UserContext } from "../../UserContext";
-import Error from "../../Helper/Error";
-import Loading from "../../Helper/Loading";
-import style from "./FeedPhotos.module.css";
+import useFetch from "../../Hooks/useFetch";
+import { PHOTOS_GET } from "../../Api";
+import Error from "../Helper/Error";
+import Loading from "../Helper/Loading";
+import styles from "./FeedPhotos.module.css";
 
 const FeedPhotos = ({ setModalPhoto }) => {
-  const { getPhotos, error, loading, photos } = React.useContext(UserContext);
+  const { data, loading, error, request } = useFetch();
 
   React.useEffect(() => {
-    getPhotos(1, 6, 0);
-  }, []);
+    async function fetchPhotos() {
+      const { url, options } = PHOTOS_GET({ page: 1, total: 6, user: 0 });
+      const { json } = await request(url, options);
+      console.log(json);
+    }
+    fetchPhotos();
+  }, [request]);
 
   if (error) return <Error error={error} />;
   if (loading) return <Loading />;
-  if (photos)
+  if (data)
     return (
-      <ul className={`${style.feed} animeLeft`}>
-        {photos.map((photo) => (
+      <ul className={`${styles.feed} animeLeft`}>
+        {data.map((photo) => (
           <FeedPhotosItem
             key={photo.id}
             photo={photo}
@@ -29,6 +33,7 @@ const FeedPhotos = ({ setModalPhoto }) => {
         ))}
       </ul>
     );
+  else return null;
 };
 
 export default FeedPhotos;

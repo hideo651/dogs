@@ -1,9 +1,5 @@
 const LoginPasswordReset = () => {
-  return (
-    <>
-      <h1>Login Reset</h1>
-    </>
-  );
+  return <div></div>;
 };
 
 export default LoginPasswordReset;

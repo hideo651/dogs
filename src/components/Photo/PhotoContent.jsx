@@ -1,31 +1,28 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
+
+import styles from "./PhotoContent.module.css";
 import { Link } from "react-router-dom";
-import style from "./PhotoContent.module.css";
 import PhotoComments from "./PhotoComments";
+
 const PhotoContent = ({ data }) => {
   const { photo, comments } = data;
   return (
-    <div className={style.photo}>
-      <div className={style.img}>
+    <div className={styles.photo}>
+      <div className={styles.img}>
         <img src={photo.src} alt={photo.title} />
       </div>
-      <div className={style.details}>
+      <div className={styles.details}>
         <div>
-          <p className={style.author}>
+          <p className={styles.author}>
             <Link to={`/perfil/${photo.author}`}>@{photo.author}</Link>
-            <span className={style.visualizacoes}>{photo.acessos}</span>
+            <span className={styles.visualizacoes}>{photo.acessos}</span>
           </p>
           <h1 className="title">
             <Link to={`/foto/${photo.id}`}>{photo.title}</Link>
           </h1>
-          <ul className={style.attributes}>
+          <ul className={styles.attributes}>
             <li>{photo.peso} kg</li>
-            <li>
-              {photo.idade === "1"
-                ? `${photo.idade} ano`
-                : `${photo.idade} anos`}
-            </li>
+            <li>{photo.idade} anos</li>
           </ul>
         </div>
       </div>

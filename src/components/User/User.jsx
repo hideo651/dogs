@@ -1,9 +1,8 @@
-import { Route, Routes } from "react-router-dom";
 import UserHeader from "./UserHeader";
+import { Routes, Route } from "react-router-dom";
 import Feed from "../Feed/Feed";
 import UserPhotoPost from "./UserPhotoPost";
 import UserStats from "./UserStats";
-import NotFound from "../NotFound";
 
 const User = () => {
   return (
@@ -11,9 +10,8 @@ const User = () => {
       <UserHeader />
       <Routes>
         <Route path="/" element={<Feed />} />
-        <Route path="/postar" element={<UserPhotoPost />} />
-        <Route path="/estatistica" element={<UserStats />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="postar" element={<UserPhotoPost />} />
+        <Route path="estatisticas" element={<UserStats />} />
       </Routes>
     </section>
   );
