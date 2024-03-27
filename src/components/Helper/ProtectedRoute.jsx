@@ -10,11 +10,7 @@ const ProtectedRoute = ({ children }) => {
   } else if (login === false) {
     return <Navigate to="/login" />;
   } else {
-    return (
-      <div className="container">
-        <h1 className="title">Carregando...</h1>
-      </div>
-    );
+    return <></>;
   }
 };
 
