@@ -7,7 +7,7 @@ import Error from "../Helper/Error";
 import styles from "./PhotoCommentsForm.module.css";
 import { COMMENT_POST } from "../../Api";
 
-const PhotoCommentsForm = ({ id, setComments }) => {
+const PhotoCommentsForm = ({ id, setComments, single }) => {
   const [comment, setComment] = React.useState("");
   const { request, error } = useFetch();
 
@@ -18,14 +18,13 @@ const PhotoCommentsForm = ({ id, setComments }) => {
     const { response, json } = await request(url, options);
 
     if (response.ok) {
-      console.log("Olá");
       setComment("");
       setComments((comments) => [...comments, json]);
     }
   }
 
   return (
-    <form className={styles.form}>
+    <form className={`${styles.form} ${single ? styles.single : ""}`}>
       <textarea
         className={styles.textarea}
         id="comment"
