@@ -10,7 +10,6 @@ const Feed = ({ user }) => {
 
   React.useEffect(() => {
     let wait = false;
-    console.log("oi");
     function infinitiScroll() {
       if (infinite) {
         const scroll = window.scrollY;
@@ -48,6 +47,17 @@ const Feed = ({ user }) => {
           setInfinite={setInfinite}
         />
       ))}
+      {!infinite && !user && (
+        <p
+          style={{
+            textAlign: "center",
+            padding: "2rem 0 4rem 0",
+            color: "#888",
+          }}
+        >
+          Não existem mais postagens
+        </p>
+      )}
     </div>
   );
 };
